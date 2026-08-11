@@ -1,0 +1,33 @@
+name: audit
+
+# Runs on a macOS runner because Homebrew casks are macOS only, and because a
+# clean runner sidesteps the vendored-gem breakage that makes brew audit
+# unrunnable on some local installs.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tap this checkout
+        run: |
+          set -euo pipefail
+          target="$(brew --repository)/Library/Taps/tevanb/homebrew-tap"
+          mkdir -p "$(dirname "$target")"
+          ln -s "$GITHUB_WORKSPACE" "$target"
+          brew tap
+
+      - name: Audit
+        run: brew audit --cask --strict tevanb/tap/parallel-harness-pets
+
+      - name: Install it for real
+        run: |
+          set -euo pipefail
+          brew install --cask tevanb/tap/parallel-harness-pets
+          pets version
+          pets --help | head -3
