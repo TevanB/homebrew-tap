@@ -21,7 +21,7 @@ jobs:
       - name: Update parallel-harness-pets
         env:
           GH_TOKEN: ${{ github.token }}
-          REPO: TevanB/parallel-harness-pets
+          REPO: TevvvB/parallel-harness-pets
           CASK: Casks/parallel-harness-pets.rb
         run: |
           set -euo pipefail

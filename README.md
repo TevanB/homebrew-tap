@@ -1,9 +1,9 @@
-# TevanB's Homebrew tap
+# TevvvB's Homebrew tap
 
 ```sh
-brew install TevanB/tap/parallel-harness-pets
+brew install TevvvB/tap/parallel-harness-pets
 ```
 
 | Formula | Description |
 |---|---|
-| [parallel-harness-pets](https://github.com/TevanB/parallel-harness-pets) | A creature for every git worktree, in your agent's status line |
+| [parallel-harness-pets](https://github.com/TevvvB/parallel-harness-pets) | A creature for every git worktree, in your agent's status line |

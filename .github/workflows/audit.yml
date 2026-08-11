@@ -24,17 +24,17 @@ jobs:
       - name: Tap this checkout
         run: |
           set -euo pipefail
-          target="$(brew --repository)/Library/Taps/tevanb/homebrew-tap"
+          target="$(brew --repository)/Library/Taps/tevvvb/homebrew-tap"
           mkdir -p "$(dirname "$target")"
           ln -s "$GITHUB_WORKSPACE" "$target"
           brew tap
 
       - name: Audit
-        run: brew audit --cask --strict tevanb/tap/parallel-harness-pets
+        run: brew audit --cask --strict tevvvb/tap/parallel-harness-pets
 
       - name: Install it for real
         run: |
           set -euo pipefail
-          brew install --cask tevanb/tap/parallel-harness-pets
+          brew install --cask tevvvb/tap/parallel-harness-pets
           pets version
           pets --help | head -3
