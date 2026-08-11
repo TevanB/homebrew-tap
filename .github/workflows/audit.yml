@@ -7,6 +7,13 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  # A push made with the built-in GITHUB_TOKEN does not trigger workflows, so
+  # the updater's commits would never be audited without this. workflow_run
+  # fires on the other workflow finishing rather than on its push, which is not
+  # subject to that restriction.
+  workflow_run:
+    workflows: ["update casks"]
+    types: [completed]
 
 jobs:
   audit:
