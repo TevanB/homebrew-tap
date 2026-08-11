@@ -1,5 +1,5 @@
 cask "parallel-harness-pets" do
-  version "0.0.9"
+  version "0.1.0"
 
   on_macos do
     on_intel do
@@ -7,7 +7,7 @@ cask "parallel-harness-pets" do
       url "https://github.com/TevanB/parallel-harness-pets/releases/download/v#{version}/parallel-harness-pets_#{version}_darwin_amd64.tar.gz"
     end
     on_arm do
-      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+      sha256 "d643445a82de720fb4e47c0b74c1bd81922c8f1aa4b78bcc6149fb462ebeaead"
       url "https://github.com/TevanB/parallel-harness-pets/releases/download/v#{version}/parallel-harness-pets_#{version}_darwin_arm64.tar.gz"
     end
   end
