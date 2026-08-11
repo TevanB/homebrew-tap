@@ -1,0 +1,63 @@
+name: update casks
+
+# Runs here rather than in the release repo on purpose. A workflow in the
+# release repo cannot write to this one without a personal access token, but
+# this repo's own GITHUB_TOKEN can. Pulling from the release instead of pushing
+# to the tap removes the need for any secret at all.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update parallel-harness-pets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: TevanB/parallel-harness-pets
+          CASK: Casks/parallel-harness-pets.rb
+        run: |
+          set -euo pipefail
+
+          latest="$(gh release view --repo "$REPO" --json tagName --jq .tagName)"
+          version="${latest#v}"
+          current="$(sed -n 's/^  version "\(.*\)"$/\1/p' "$CASK")"
+          echo "latest=$version current=$current"
+          if [ "$version" = "$current" ]; then
+            echo "already current"
+            exit 0
+          fi
+
+          # Checksums come from the published release. A locally rebuilt binary
+          # would hash differently, and every brew install would then fail
+          # verification.
+          gh release download "$latest" --repo "$REPO" --pattern checksums.txt --output /tmp/checksums.txt --clobber
+          sha() { grep "$1" /tmp/checksums.txt | awk '{print $1}'; }
+
+          for arch in darwin_amd64 darwin_arm64 linux_amd64 linux_arm64; do
+            if [ -z "$(sha $arch)" ]; then
+              echo "no checksum for $arch in the release, refusing to write a broken cask"
+              exit 1
+            fi
+          done
+
+          sed \
+            -e "s/@@VERSION@@/$version/" \
+            -e "s/@@DARWIN_AMD64@@/$(sha darwin_amd64)/" \
+            -e "s/@@DARWIN_ARM64@@/$(sha darwin_arm64)/" \
+            -e "s/@@LINUX_AMD64@@/$(sha linux_amd64)/" \
+            -e "s/@@LINUX_ARM64@@/$(sha linux_arm64)/" \
+            templates/parallel-harness-pets.rb.tmpl > "$CASK"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$CASK"
+          git commit -m "parallel-harness-pets $version"
+          git push
