@@ -1,24 +1,24 @@
 cask "parallel-harness-pets" do
-  version "0.2.2"
+  version "0.2.3"
 
   on_macos do
     on_intel do
-      sha256 "f4b444a8eeb64930fc2b44336ad35af52d543d8c22601e21708a6f82be91d841"
+      sha256 "4b1efbd801cf369fa6a1b03352decc3e1a27faf1cdb2d8769b2749295eeac780"
       url "https://github.com/TevvvB/parallel-harness-pets/releases/download/v#{version}/parallel-harness-pets_#{version}_darwin_amd64.tar.gz"
     end
     on_arm do
-      sha256 "f6c1ce3100e5a6460c05028ff77a8dcd0dbb0f0f2e62f167a792676e16995f19"
+      sha256 "8a8a36437ec4a255b017a9816169ad28ef704a4e3e8e0788ff3296a740de05fd"
       url "https://github.com/TevvvB/parallel-harness-pets/releases/download/v#{version}/parallel-harness-pets_#{version}_darwin_arm64.tar.gz"
     end
   end
 
   on_linux do
     on_intel do
-      sha256 "70511234c65bf41788afa50b451403f6060cc6b501b1324a4a3b8bc73f333486"
+      sha256 "787e950bfc9fc2044e6fbdaddc80df30dd3a3ef3f2dc97b04184d468187be42f"
       url "https://github.com/TevvvB/parallel-harness-pets/releases/download/v#{version}/parallel-harness-pets_#{version}_linux_amd64.tar.gz"
     end
     on_arm do
-      sha256 "81d8ba433737f24245a68ebb5ed7029785f3b2af0c90520910491c48ebc399bc"
+      sha256 "d3a7b609c6d51de495ce0fe86ba7b60afe60d69b3ba089215911bb1cf5e796a9"
       url "https://github.com/TevvvB/parallel-harness-pets/releases/download/v#{version}/parallel-harness-pets_#{version}_linux_arm64.tar.gz"
     end
   end
